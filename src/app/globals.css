@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #facc15;
+  --color-pastel-lavender: #a47f89;
+  --color-pastel-pink: #cfa4a3;
+  --color-creamy-almond: #eee1cf;
+  --color-khaki-web: #beb1a1;
+  --color-black-coral: #5f6974;
+  --color-wintergreen: #6f8c7e;
+  --color-laurel-green: #a7b5a3;
+  --color-dutch-white: #dbd6be;
+  --color-creamy-linen: #f5eedf;
+  --color-rhythm-blue: #767b8f;
+  --color-super-dark: #3b4249;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-creamy-linen);
+    color: var(--color-super-dark);
+    @apply antialiased flex flex-col;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    min-height: 100vh;
+    background-image: 
+      linear-gradient(90deg, transparent 40px, var(--color-pastel-pink) 40px, var(--color-pastel-pink) 42px, transparent 42px),
+      linear-gradient(transparent 95%, var(--color-rhythm-blue) 95%);
+    background-size: 100% 28px;
+    background-position: 0 0;
+    
+    /* Scrapbook Pencil Cursor */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='20'>✏️</text></svg>") 0 20, auto;
+  }
+  
+  /* Paper Grain Texture */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100vw; 
+    height: 100vh;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+  
+  /* Pointing Hand Cursor for Interactables */
+  a, button, [role="button"], summary {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='20'>👆</text></svg>") 12 0, pointer !important;
+  }
+  input, select, textarea {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='20'>🖊️</text></svg>") 0 20, text !important;
+  }
+  
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-super-dark);
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-creamy-almond);
+    border-left: 2px dashed var(--color-black-coral);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-pastel-pink);
+    border: 2px solid var(--color-black-coral);
+    border-radius: 20px;
+  }
+  /* CSS Keyframes for Jiggle */
+  @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  @keyframes wiggle-fade {
+    0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; }
+    30% { transform: translateY(-30px) rotate(-15deg) scale(1.5); opacity: 1; }
+    60% { transform: translateY(-50px) rotate(15deg) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-80px) rotate(0deg) scale(0); opacity: 0; }
+  }
+  
+  .hover-wiggle:hover {
+    animation: wiggle 0.4s ease-in-out infinite;
+  }
+  
+  .animate-wiggle-fade {
+    animation: wiggle-fade forwards;
+  }
+}
+
+/* Holographic Trading Card Shimmer Effect */
+@keyframes holo-shimmer {
+  0% { background-position: -150% -150%; }
+  100% { background-position: 150% 150%; }
+}
+
+.holo-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 215, 0, 0.15) 30%,
+    rgba(255, 255, 255, 0.6) 45%,
+    rgba(0, 255, 255, 0.15) 60%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: holo-shimmer 3s ease-in-out infinite alternate;
+  mix-blend-mode: color-dodge;
+  pointer-events: none;
+  border-radius: 4px; /* matches typical image inside polaroid */
+}
+
+/* Specific Shimmers for Scrapbook */
+.holo-rainbow {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 0, 0, 0.1) 0%,
+    rgba(255, 154, 0, 0.2) 20%,
+    rgba(208, 222, 33, 0.3) 40%,
+    rgba(79, 220, 74, 0.3) 60%,
+    rgba(63, 218, 216, 0.2) 80%,
+    rgba(47, 201, 226, 0.1) 100%
+  );
+  background-size: 200% 200%;
+  animation: holo-shimmer 4s ease-in-out infinite alternate;
+  mix-blend-mode: hard-light;
+}
+
+.font-handdrawn {
+  font-family: var(--font-caveat), cursive;
+}
+
+@layer components {
+  /* UI Components */
+  .glass-panel {
+    @apply bg-white/5 border border-white/10 backdrop-blur-md shadow-xl rounded-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-creamy-almond border-2 border-black-coral rounded-3xl p-4 text-center hover:border-pastel-pink hover:shadow-pastel-pink/20 hover:shadow-2xl transition shadow-[4px_4px_0_var(--color-black-coral)];
+  }
+  
+  .glass-input-wrapper {
+    @apply flex bg-white border-2 border-black-coral rounded-full p-2 items-center focus-within:border-pastel-pink transition-colors w-full shadow-[4px_4px_0_var(--color-black-coral)];
+  }
+  
+  .input-field {
+    @apply flex-1 bg-transparent px-4 py-2 outline-none text-super-dark placeholder-rhythm-blue w-full font-medium;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-pastel-pink hover:bg-pastel-lavender text-white font-bold px-6 py-2 rounded-full transition-transform active:scale-95 flex items-center justify-center border-2 border-black-coral shadow-[3px_3px_0_var(--color-black-coral)] hover:translate-y-px hover:translate-x-px hover:shadow-[2px_2px_0_var(--color-black-coral)];
+  }
+  
+  .btn-secondary {
+    @apply bg-creamy-almond hover:bg-dutch-white text-black-coral font-bold px-6 py-2 rounded-full transition-transform active:scale-95 flex items-center justify-center border-2 border-black-coral shadow-[3px_3px_0_var(--color-black-coral)];
+  }
+  
+  /* Layout specifics */
+  .page-container {
+    @apply container mx-auto px-4 py-8 max-w-7xl flex-1;
+  }
+  
+  .page-title {
+    @apply text-5xl font-black mb-8 text-super-dark drop-shadow-sm;
+  }
+  
+  .page-desc {
+    @apply text-rhythm-blue mb-8 max-w-xl font-medium;
+  }
+  
+  /* Skeleton Loading */
+  .skeleton-card {
+    @apply w-full aspect-[3/4] bg-dutch-white rounded-2xl animate-pulse border-2 border-khaki-web border-dashed;
+  }
+
+  /* Hand-drawn UI Classes */
+  .hand-drawn {
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+  }
+  
+  .hand-drawn-alt {
+    border-radius: 15px 255px 15px 225px/225px 15px 255px 15px !important;
+  }
+  
+  .hand-drawn-btn {
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+  }
+}
