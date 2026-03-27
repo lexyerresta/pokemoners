@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { use, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { FALLBACK_IMAGES } from '@/lib/constants';
 
 export default function CardDetail({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
@@ -19,7 +20,7 @@ export default function CardDetail({ params }: { params: Promise<{ id: string }>
 
   useEffect(() => {
     if (card && card.image !== undefined) {
-      setImgSrc(card.image ? `${card.image}/high.webp` : '/card-back.png');
+      setImgSrc(card.image ? `${card.image}/high.webp` : FALLBACK_IMAGES.CARD_BACK);
     }
   }, [card]);
 
@@ -37,27 +38,25 @@ export default function CardDetail({ params }: { params: Promise<{ id: string }>
       
       <div className="flex flex-col md:flex-row gap-12 items-start">
         <div className="md:w-1/3 flex justify-center perspective-[1500px]">
-          {imgSrc && imgSrc !== '/card-back.png' ? (
-            <motion.div 
+          {imgSrc && imgSrc !== FALLBACK_IMAGES.CARD_BACK ? (
+             <motion.div 
               className="relative w-[340px] h-[480px] cursor-pointer group z-20"
-              style={{ transformStyle: 'preserve-3d' }}
-              animate={{ rotateY: isFlipped ? 180 : 0 }}
-              transition={{ type: "spring", stiffness: 220, damping: 25 }}
+              animate={{ rotateY: isFlipped ? 360 : 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
               onClick={() => setIsFlipped(!isFlipped)}
             >
               {/* Front side */}
               <div 
                 className="absolute inset-0 bg-white p-3 pb-8 border-4 border-black-coral shadow-[12px_12px_0_var(--color-black-coral)] rotate-[-2deg]"
-                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
               >
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-pastel-pink/80 border-2 border-black-coral -rotate-6 z-30 shadow-sm" />
-                <div className="absolute top-2 right-2 bg-mustard border-2 border-black-coral px-2 rounded-full text-[10px] font-black uppercase text-super-dark shadow-[1px_1px_0_var(--color-black-coral)] rotate-12 group-hover:-translate-y-1 transition-transform pointer-events-none">Klik Balik!</div>
+                <div className="absolute top-2 right-2 bg-mustard border-2 border-black-coral px-2 rounded-full text-[10px] font-black uppercase text-super-dark shadow-[1px_1px_0_var(--color-black-coral)] rotate-12 group-hover:-translate-y-1 transition-transform pointer-events-none">Putar!</div>
                 <Image 
                   src={imgSrc}
                   alt={card.name}
                   fill
                   className="object-contain border-2 border-black-coral bg-creamy-almond"
-                  onError={() => setImgSrc('/card-back.png')}
+                  onError={() => setImgSrc(FALLBACK_IMAGES.CARD_BACK)}
                 />
                 
                 {/* Holographic Effects based on Rarity */}
@@ -67,20 +66,6 @@ export default function CardDetail({ params }: { params: Promise<{ id: string }>
                 {card.rarity && card.rarity.match(/Holo|Rare|VMAX|VSTAR|EX|GX/i) && !card.rarity.match(/Secret|Illustration|Hyper|Rainbow/i) && (
                   <div className="holo-mask"></div>
                 )}
-              </div>
-
-              {/* Back side */}
-              <div 
-                className="absolute inset-0 bg-white p-3 pb-8 border-4 border-black-coral shadow-[12px_12px_0_var(--color-black-coral)] rotate-[2deg]"
-                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-              >
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-8 bg-pastel-lavender/90 border-2 border-dashed border-black-coral rotate-3 z-30 shadow-sm" />
-                <Image 
-                  src="/card-back.png"
-                  alt="Card Back"
-                  fill
-                  className="object-contain border-2 border-black-coral bg-rhythm-blue/20 scale-x-[-1]"
-                />
               </div>
             </motion.div>
           ) : (

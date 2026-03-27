@@ -13,6 +13,15 @@ Selamat datang di repositori **Pokemoners**! Project ini adalah *web app* esteti
 * **Mobile Friendly:** Kompatibel 100% pada *mobile browser* untuk cek harga darurat saat kopdar *trading* kartu.
 * **Support Dual Bahasa:** Bahasa Indonesia dan English (ID/EN) yang *seamless*.
 
+## ⚙️ Setup Environment
+Duplicate `.env.example` (atau buat file `.env`) dan sesuaikan variabel berikut:
+```env
+NEXT_PUBLIC_TCGDEX_API_URL="https://api.tcgdex.net/v2/en"
+NEXT_PUBLIC_POKEMON_TCG_API_URL="https://api.pokemontcg.io/v2"
+NEXT_PUBLIC_SAWERIA_URL="https://saweria.co/lexyerresta"
+NEXT_PUBLIC_TRAKTEER_URL="https://trakteer.id/lexyerresta"
+```
+
 ## 🚀 Tech Stack Utama
 * **Next.js (App Router)** & **TypeScript**
 * **Tailwind CSS v4** + **Framer Motion** untuk styling ala *scrapbook* dan memanjakan mata via interaksi UI yang empuk

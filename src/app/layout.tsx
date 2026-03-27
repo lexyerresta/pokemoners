@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ClickEffects from '@/components/ui/ClickEffects';
 import ScrollProgress from '@/components/ui/ScrollProgress';
+import { SUPPORT_LINKS } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Pokemoners | Dari kolektor, untuk kolektor',
@@ -43,10 +44,10 @@ export default function RootLayout({
             {/* Dropdown Menu (upwards) */}
             <div className="absolute right-0 bottom-full mb-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 w-48 origin-bottom-right">
               <div className="bg-creamy-linen border-[3px] border-black-coral shadow-[6px_6px_0_var(--color-black-coral)] p-3 flex flex-col gap-3 hand-drawn-alt rotate-2">
-                <a href="https://saweria.co/lexyerresta" target="_blank" rel="noopener noreferrer" className="bg-pastel-pink text-white font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] active:bg-terracotta transition-colors hand-drawn-btn active:-translate-y-px active:-rotate-2 rotate-1 text-center text-sm">
+                <a href={SUPPORT_LINKS.SAWERIA} target="_blank" rel="noopener noreferrer" className="bg-pastel-pink text-white font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] active:bg-terracotta transition-colors hand-drawn-btn active:-translate-y-px active:-rotate-2 rotate-1 text-center text-sm">
                   ✨ Saweria
                 </a>
-                <a href="https://trakteer.id/lexyerresta" target="_blank" rel="noopener noreferrer" className="bg-wintergreen text-super-dark font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] active:bg-mustard transition-colors hand-drawn-btn active:-translate-y-px active:rotate-2 -rotate-1 text-center text-sm">
+                <a href={SUPPORT_LINKS.TRAKTEER} target="_blank" rel="noopener noreferrer" className="bg-wintergreen text-super-dark font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] active:bg-mustard transition-colors hand-drawn-btn active:-translate-y-px active:rotate-2 -rotate-1 text-center text-sm">
                   ☕ Trakteer
                 </a>
               </div>

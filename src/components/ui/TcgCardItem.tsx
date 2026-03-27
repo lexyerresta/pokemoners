@@ -2,16 +2,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { getCardRotation, getDecorationType } from '@/lib/utils';
 
 export default function TcgCardItem({ card }: { card: any }) {
   const [imgSrc, setImgSrc] = useState(card.image ? `${card.image}/high.webp` : '/card-back.png');
 
-  // Pseudo-random rotation based on ID string length
-  const rotations = ['rotate-[-2deg]', 'rotate-[1deg]', 'rotate-[3deg]', 'rotate-[-1deg]'];
-  const rotateClass = rotations[card.id.length % 4];
-  
-  const decorations = ['tape', 'pin', 'clip'];
-  const decType = decorations[card.name.length % 3];
+  const rotateClass = getCardRotation(card.id);
+  const decType = getDecorationType(card.name);
 
   return (
     <Link href={`/cards/${card.id}`} className={`group relative block bg-dutch-white border-[3px] border-black-coral p-3 hover:-translate-y-2 hover:scale-105 transition-all shadow-[6px_6px_0_var(--color-black-coral)] hover:shadow-[4px_4px_0_var(--color-pastel-pink)] ${rotateClass} hand-drawn hover-wiggle`}>

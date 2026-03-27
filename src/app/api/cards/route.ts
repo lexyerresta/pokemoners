@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-
-const TCGDEX_URL = 'https://api.tcgdex.net/v2/en';
+import { API_URLS } from '@/lib/constants';
+import { getSearchTerms } from '@/lib/utils';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -12,15 +12,14 @@ export async function GET(request: Request) {
 
   try {
     if (type === 'list' || type === 'search') {
-      const res = await fetch(`${TCGDEX_URL}/cards`, { cache: 'no-store' });
+      const res = await fetch(`${API_URLS.TCGDEX}/cards`, { cache: 'no-store' });
       if (!res.ok) throw new Error('API fetch failed');
       const allCards = await res.json();
       
       let filtered = allCards;
       if (type === 'search' && query) {
-        const terms = query.toLowerCase().trim().split(/\s+/);
+        const terms = getSearchTerms(query);
         filtered = allCards.filter((c: any) => {
-          // Check that ALL terms are matched somewhere in the name or id
           return terms.every(term => 
             (c.name && c.name.toLowerCase().includes(term)) || 
             (c.id && c.id.toLowerCase().includes(term))
@@ -37,7 +36,7 @@ export async function GET(request: Request) {
         limit,
       });
     } else if (type === 'detail') {
-      const res = await fetch(`${TCGDEX_URL}/cards/${id}`);
+      const res = await fetch(`${API_URLS.TCGDEX}/cards/${id}`);
       if (!res.ok) throw new Error('API fetch failed');
       const data = await res.json();
       return NextResponse.json(data);

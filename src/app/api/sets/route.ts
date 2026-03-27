@@ -1,16 +1,13 @@
 import { NextResponse } from 'next/server';
+import { API_URLS } from '@/lib/constants';
 
-const TCGDEX_URL = 'https://api.tcgdex.net/v2/en';
-
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const res = await fetch(`${TCGDEX_URL}/sets`, { cache: 'force-cache' });
+    const res = await fetch(`${API_URLS.TCGDEX}/sets`, { cache: 'force-cache' });
     if (!res.ok) throw new Error('API fetch failed');
     const allSets = await res.json();
     
-    // Sort sets descending (newest usually have higher IDs or release dates, but TCGdex sets have releaseDate)
     const sortedSets = allSets.sort((a: any, b: any) => {
-      // Sometimes releaseDate is missing, fallback to string compare
       if (a.releaseDate && b.releaseDate) return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
       return b.id.localeCompare(a.id);
     });

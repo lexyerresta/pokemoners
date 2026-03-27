@@ -6,11 +6,13 @@ import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 
+import { getDecorationType } from '@/lib/utils';
+import { FALLBACK_IMAGES } from '@/lib/constants';
+
 function PricingCard({ card, isEven }: { card: any, isEven: boolean }) {
-  const decorations = ['tape', 'pin', 'clip'];
-  const decType = decorations[card.name.length % 3];
+  const decType = getDecorationType(card.name);
   
-  const [imgSrc, setImgSrc] = useState(card.images?.small || '/card-back.png');
+  const [imgSrc, setImgSrc] = useState(card.images?.small || FALLBACK_IMAGES.CARD_BACK);
 
   return (
     <motion.div variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} className={`bg-${isEven ? 'dutch-white' : 'creamy-almond'} border-[3px] border-black-coral p-6 flex gap-6 hover:shadow-[10px_10px_0_var(--color-pastel-pink)] shadow-[8px_8px_0_var(--color-black-coral)] transition-all hover:-translate-y-2 hover:-translate-x-1 hover:-rotate-1 hand-drawn relative z-10 hover-wiggle`}>
@@ -26,10 +28,10 @@ function PricingCard({ card, isEven }: { card: any, isEven: boolean }) {
              src={imgSrc} 
              alt={card.name} 
              fill
-             className={`object-cover ${imgSrc !== '/card-back.png' ? 'filter sepia-[0.1]' : 'p-2'}`}
-             onError={() => setImgSrc('/card-back.png')}
+             className={`object-cover ${imgSrc !== FALLBACK_IMAGES.CARD_BACK ? 'filter sepia-[0.1]' : 'p-2'}`}
+             onError={() => setImgSrc(FALLBACK_IMAGES.CARD_BACK)}
            />
-           {imgSrc === '/card-back.png' && (
+           {imgSrc === FALLBACK_IMAGES.CARD_BACK && (
              <div className="absolute inset-0 flex flex-col items-center justify-center bg-dutch-white/90 backdrop-blur-sm z-10 p-2 text-center pointer-events-none">
                <span className="text-terracotta text-sm font-handdrawn font-black border-[3px] border-terracotta px-2 py-1 bg-white shadow-[2px_2px_0_var(--color-terracotta)] rotate-[-10deg] leading-tight">Gagal<br/>Muat</span>
              </div>
