@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ClickEffects from '@/components/ui/ClickEffects';
 import ScrollProgress from '@/components/ui/ScrollProgress';
+import GlobalCanvas from '@/components/ui/GlobalCanvas';
 import { SUPPORT_LINKS } from '@/lib/constants';
 
 export const metadata: Metadata = {
@@ -25,15 +26,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${caveat.variable}`}>
-      <body>
+       <body className="relative min-h-screen">
         <Providers>
+          <GlobalCanvas />
           <ScrollProgress />
           <ClickEffects />
-          <Navbar />
-          <main className="flex-1 flex flex-col">
-            {children}
-          </main>
-          <Footer />
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1 flex flex-col">
+              {children}
+            </main>
+            <Footer />
+          </div>
 
           {/* Floating Mobile Support Button */}
           <div className="md:hidden fixed bottom-6 right-4 z-50 group">

@@ -2,10 +2,8 @@
 
 import UniversalSearch from '@/components/UniversalSearch';
 import FeatureCard from '@/components/ui/FeatureCard';
-import DoodleCanvas from '@/components/ui/DoodleCanvas';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -112,16 +110,8 @@ export default function Home() {
         </motion.div>
       </motion.div>
 
-      {/* Interactive Doodle Board */}
-      <motion.div
-        className="mt-20 relative z-10 flex flex-col items-center justify-center w-full pb-12"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-64 bg-pastel-lavender/30 blur-3xl -z-10 rounded-full" />
-        <DoodleCanvas />
-      </motion.div>
+      {/* Hero spacing */}
+      <div className="h-32" />
     </div>
   );
 }
