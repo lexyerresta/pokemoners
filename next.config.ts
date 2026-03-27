@@ -24,6 +24,7 @@ const nextConfig: NextConfig = {
         hostname: 'images.scrydex.com'
       }
     ],
+    minimumCacheTTL: 604800, // 7 days cache
   },
   async redirects() {
     return [

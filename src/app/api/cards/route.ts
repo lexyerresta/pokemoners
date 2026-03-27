@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { API_URLS } from '@/lib/constants';
 import { getSearchTerms } from '@/lib/utils';
+import { fetchWithFileCache } from '@/lib/fileCache';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -12,9 +13,11 @@ export async function GET(request: Request) {
 
   try {
     if (type === 'list' || type === 'search') {
-      const res = await fetch(`${API_URLS.TCGDEX}/cards`, { cache: 'no-store' });
-      if (!res.ok) throw new Error('API fetch failed');
-      const allCards = await res.json();
+      const allCards = await fetchWithFileCache('all-cards-list', async () => {
+        const res = await fetch(`${API_URLS.TCGDEX}/cards`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('API fetch failed');
+        return res.json();
+      });
       
       let filtered = allCards;
       if (type === 'search' && query) {
@@ -36,9 +39,11 @@ export async function GET(request: Request) {
         limit,
       });
     } else if (type === 'detail') {
-      const res = await fetch(`${API_URLS.TCGDEX}/cards/${id}`);
-      if (!res.ok) throw new Error('API fetch failed');
-      const data = await res.json();
+      const data = await fetchWithFileCache(`card-detail-${id}`, async () => {
+        const res = await fetch(`${API_URLS.TCGDEX}/cards/${id}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('API fetch failed');
+        return res.json();
+      });
       return NextResponse.json(data);
     }
     
