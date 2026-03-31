@@ -1,0 +1,106 @@
+{
+  "category": "Pokemon",
+  "id": "swsh6-1",
+  "illustrator": "Sanosuke Sakuma",
+  "image": "https://assets.tcgdex.net/en/swsh/swsh6/1",
+  "localId": "1",
+  "name": "Weedle",
+  "rarity": "Common",
+  "set": {
+    "cardCount": {
+      "official": 198,
+      "total": 233
+    },
+    "id": "swsh6",
+    "logo": "https://assets.tcgdex.net/en/swsh/swsh6/logo",
+    "name": "Chilling Reign",
+    "symbol": "https://assets.tcgdex.net/univ/swsh/swsh6/symbol"
+  },
+  "variants": {
+    "firstEdition": false,
+    "holo": false,
+    "normal": true,
+    "reverse": true,
+    "wPromo": false
+  },
+  "variants_detailed": [
+    {
+      "type": "normal",
+      "size": "standard"
+    },
+    {
+      "type": "reverse",
+      "size": "standard"
+    }
+  ],
+  "dexId": [
+    13
+  ],
+  "hp": 40,
+  "types": [
+    "Grass"
+  ],
+  "description": "Its poison stinger is very powerful. Its bright-colored body is intended to warn off its enemies.",
+  "stage": "Basic",
+  "attacks": [
+    {
+      "cost": [
+        "Grass"
+      ],
+      "name": "Pierce",
+      "damage": 20
+    }
+  ],
+  "weaknesses": [
+    {
+      "type": "Fire",
+      "value": "×2"
+    }
+  ],
+  "retreat": 1,
+  "regulationMark": "E",
+  "legal": {
+    "standard": false,
+    "expanded": true
+  },
+  "updated": "2025-08-16T20:39:55Z",
+  "pricing": {
+    "cardmarket": {
+      "updated": "2026-03-30T00:47:39.000Z",
+      "unit": "EUR",
+      "idProduct": 567081,
+      "avg": 0.03,
+      "low": 0.02,
+      "trend": 0.03,
+      "avg1": 0.03,
+      "avg7": 0.03,
+      "avg30": 0.04,
+      "avg-holo": 0.16,
+      "low-holo": 0.03,
+      "trend-holo": 0.16,
+      "avg1-holo": 0.22,
+      "avg7-holo": 0.15,
+      "avg30-holo": 0.16
+    },
+    "tcgplayer": {
+      "updated": "2026-03-30T20:05:04.000Z",
+      "unit": "USD",
+      "normal": {
+        "productId": 241648,
+        "lowPrice": 0.01,
+        "midPrice": 0.15,
+        "highPrice": 999,
+        "marketPrice": 0.11,
+        "directLowPrice": 0.03
+      },
+      "reverse-holofoil": {
+        "productId": 241648,
+        "lowPrice": 0.01,
+        "midPrice": 0.25,
+        "highPrice": 999,
+        "marketPrice": 0.23,
+        "directLowPrice": 0.13
+      }
+    }
+  }
+}

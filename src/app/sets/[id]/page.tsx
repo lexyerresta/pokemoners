@@ -5,11 +5,25 @@ import { use, useState } from 'react';
 import TcgCardItem from '@/components/ui/TcgCardItem';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import PackOpener from '@/components/ui/PackOpener';
+import { useEffect } from 'react';
 
 export default function SetDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { t } = useLanguage();
   const unwrapped = use(params);
+  const [showOpening, setShowOpening] = useState(false);
+
+  useEffect(() => {
+    const sessionKey = `hasSeenSetOpening_${unwrapped.id}`;
+    const hasSeen = sessionStorage.getItem(sessionKey);
+    if (!hasSeen) {
+      setShowOpening(true);
+      sessionStorage.setItem(sessionKey, 'true');
+    }
+  }, [unwrapped.id]);
   
   const { data: setDetail, isLoading } = useQuery({
     queryKey: ['setDetail', unwrapped.id],
@@ -18,13 +32,24 @@ export default function SetDetail({ params }: { params: Promise<{ id: string }> 
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  if (isLoading) return <div className="page-container text-center pt-24 font-handdrawn text-5xl animate-pulse">Buka bungkus pack...</div>;
-  if (!setDetail || setDetail.error) return <div className="page-container text-center pt-24 font-handdrawn text-5xl text-terracotta hover-wiggle">Pack tidak ditemukan!</div>;
+  if (isLoading) return <div className="page-container text-center pt-24 font-handdrawn text-5xl animate-pulse">{t('loading')}</div>;
+  if (!setDetail || setDetail.error) return <div className="page-container text-center pt-24 font-handdrawn text-5xl text-terracotta hover-wiggle">{t('not_found')}</div>;
 
   return (
-    <div className="page-container">
+    <div className="page-container relative min-h-screen">
+      <AnimatePresence>
+        {showOpening && (
+          <PackOpener key="opener" onComplete={() => setShowOpening(false)} />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={showOpening ? { opacity: 0 } : { opacity: 1 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
       <Link href="/sets" className="inline-block bg-dutch-white px-4 py-2 border-[3px] border-black-coral shadow-[4px_4px_0_var(--color-black-coral)] hover:translate-y-px hover:shadow-[2px_2px_0_var(--color-black-coral)] font-black text-xs uppercase tracking-widest hand-drawn-btn hover:-rotate-2 rotate-1 mb-8">
-         Kembali ke Etalase
+         🔙 {t('back_to_sets')}
       </Link>
 
       {/* Set Header Sticky Note */}
@@ -42,22 +67,22 @@ export default function SetDetail({ params }: { params: Promise<{ id: string }> 
         
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           <div className="bg-white px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] rotate-[-2deg] hand-drawn-btn">
-            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">Seri</span>
+            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">{t('series')}</span>
             <span className="font-handdrawn text-2xl font-black">{setDetail.serie?.name || '-'}</span>
           </div>
           <div className="bg-white px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] rotate-[3deg] hand-drawn-alt hover-wiggle">
-            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">Rilis</span>
+            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">{t('release')}</span>
             <span className="font-handdrawn text-2xl font-black">{setDetail.releaseDate || '???'}</span>
           </div>
           <div className="bg-white px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] rotate-[-1deg] hand-drawn">
-            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">Total Kartu</span>
+            <span className="text-[10px] text-rhythm-blue uppercase font-black tracking-widest block mb-1">{t('total_cards')}</span>
             <span className="font-handdrawn text-2xl font-black">{setDetail.cardCount?.total || 0}</span>
           </div>
         </div>
       </div>
 
       {/* Cards List Grid */}
-      <h2 className="font-handdrawn text-5xl font-black text-center mb-8 z-10 relative bg-pastel-pink/30 inline-block px-8 py-2 border-y-[3px] border-dashed border-black-coral/50 rotate-[-1deg] mx-auto w-full max-w-sm">Isi Pack:</h2>
+      <h2 className="font-handdrawn text-5xl font-black text-center mb-8 z-10 relative bg-pastel-pink/30 inline-block px-8 py-2 border-y-[3px] border-dashed border-black-coral/50 rotate-[-1deg] mx-auto w-full max-w-sm">{t('packs_wiki')}</h2>
       
       {/* Search Bar for Cards in Set */}
       <div className="max-w-md mx-auto mb-10 relative z-10">
@@ -67,7 +92,7 @@ export default function SetDetail({ params }: { params: Promise<{ id: string }> 
             <Search size={24} className="text-rhythm-blue mr-3 drop-shadow-sm" strokeWidth={3} />
             <input
               type="text"
-              placeholder="Cari pokemon jenis apa..."
+              placeholder={t('search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1 bg-transparent outline-none font-black text-super-dark placeholder-rhythm-blue/50 text-lg"
@@ -75,7 +100,7 @@ export default function SetDetail({ params }: { params: Promise<{ id: string }> 
           </div>
           {searchQuery && (
             <div className="text-right text-xs font-black uppercase tracking-widest text-terracotta mr-2 border-t-[3px] border-dashed border-black-coral/20 pt-1 mt-1">
-              {setDetail.cards?.filter((c: any) => c.name.toLowerCase().includes(searchQuery.toLowerCase())).length} Ditemukan
+              {setDetail.cards?.filter((c: any) => c.name.toLowerCase().includes(searchQuery.toLowerCase())).length} {t('search_results')}
             </div>
           )}
         </div>
@@ -96,8 +121,9 @@ export default function SetDetail({ params }: { params: Promise<{ id: string }> 
           </motion.div>
         ))}
         {(!setDetail.cards || setDetail.cards.filter((c: any) => c.name.toLowerCase().includes(searchQuery.toLowerCase())).length === 0) && (
-          <div className="col-span-full text-center text-super-dark py-12 font-handdrawn font-black text-4xl transform -rotate-2">Yah Kosong...</div>
+          <div className="col-span-full text-center text-super-dark py-12 font-handdrawn font-black text-4xl transform -rotate-2">{t('not_found')}</div>
         )}
+      </motion.div>
       </motion.div>
     </div>
   );

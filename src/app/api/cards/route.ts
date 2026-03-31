@@ -27,8 +27,7 @@ export async function GET(request: Request) {
             (c.name && c.name.toLowerCase().includes(term)) || 
             (c.id && c.id.toLowerCase().includes(term))
           );
-        }).slice(0, 50);
-        return NextResponse.json(filtered);
+        });
       }
       
       const start = (page - 1) * limit;

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -13,6 +14,7 @@
   --color-creamy-linen: #f5eedf;
   --color-rhythm-blue: #767b8f;
   --color-super-dark: #3b4249;
+  --font-caveat: 'Caveat', cursive;
 }
 
 @layer base {
@@ -101,6 +103,11 @@
 @keyframes holo-shimmer {
   0% { background-position: -150% -150%; }
   100% { background-position: 150% 150%; }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
 }
 
 .holo-mask {

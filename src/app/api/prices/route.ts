@@ -5,6 +5,8 @@ import { getSearchTerms } from '@/lib/utils';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const search = searchParams.get('q');
+  const page = parseInt(searchParams.get('page') || '1', 10);
+  const limit = 21; // cards per page
   
   if (!search) {
     return NextResponse.json({ error: 'Search query required' }, { status: 400 });
@@ -19,10 +21,15 @@ export async function GET(request: Request) {
     
     const queryString = queryChunks.join(' ');
 
-    const res = await fetch(`${API_URLS.POKEMON_TCG}/cards?q=${encodeURIComponent(queryString)}&pageSize=20`);
+    const res = await fetch(`${API_URLS.POKEMON_TCG}/cards?q=${encodeURIComponent(queryString)}&pageSize=${limit}&page=${page}`);
     if (!res.ok) throw new Error('Failed to fetch prices');
     const data = await res.json();
-    return NextResponse.json(data);
+    return NextResponse.json({
+      data: data.data,
+      total: data.totalCount,
+      page: data.page,
+      limit: data.pageSize,
+    });
   } catch(e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }

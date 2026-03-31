@@ -4,16 +4,19 @@ import UniversalSearch from '@/components/UniversalSearch';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import { PencilIcon, CardWikiIcon, PacksIcon, PriceTagIcon } from '@/components/ui/CustomIcons';
+
+import Image from 'next/image';
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 text-center overflow-x-hidden pb-20 relative">
       
       {/* Decorative Stickers */}
       <div className="absolute top-24 right-4 md:top-20 md:right-32 w-12 h-12 md:w-16 md:h-16 bg-mustard opacity-90 z-20 rotate-12 flex items-center justify-center font-handdrawn font-black text-xl md:text-2xl border-[3px] border-black-coral shadow-[4px_4px_0_var(--color-black-coral)] hand-drawn-btn hover:scale-110 transition-transform cursor-pointer">
-        ✨
+        <PencilIcon size={32} />
       </div>
       <div className="absolute top-36 left-2 md:top-40 md:left-24 w-20 h-8 md:w-28 md:h-10 bg-pastel-pink/90 z-20 -rotate-12 border-2 md:border-[3px] border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] md:shadow-[4px_4px_0_var(--color-black-coral)] flex items-center justify-center font-handdrawn font-black text-white text-sm md:text-xl hand-drawn hover:rotate-0 transition-transform cursor-pointer">
         Holo!
@@ -37,8 +40,11 @@ export default function Home() {
         <h1 className="text-[4.5rem] md:text-[8rem] font-black mb-1 md:mb-2 tracking-tighter text-super-dark pb-2 drop-shadow-sm filter font-handdrawn leading-none">
           Pokemoners
         </h1>
-        <div className="inline-block bg-pastel-pink border-2 border-black-coral text-white font-black px-4 py-1 md:px-6 md:py-2 text-xl md:text-3xl mb-6 tracking-widest shadow-[4px_4px_0_var(--color-black-coral)] transform -rotate-2 hover:rotate-1 transition-transform hand-drawn font-handdrawn">
-          Dari Kolektor, Untuk Kolektor
+        
+        <div className="relative mb-6">
+          <div className="inline-block bg-pastel-pink border-2 border-black-coral text-white font-black px-4 py-1 md:px-6 md:py-2 text-xl md:text-3xl tracking-widest shadow-[4px_4px_0_var(--color-black-coral)] transform -rotate-2 hover:rotate-1 transition-transform hand-drawn font-handdrawn">
+            {lang === 'id' ? 'Dari Kolektor, Untuk Kolektor' : 'From Collectors, For Collectors'}
+          </div>
         </div>
         <p className="text-lg md:text-xl text-black-coral mb-8 max-w-2xl font-bold whitespace-pre-line leading-relaxed px-2">
           {t('motto').replace('"Dari kolektor, untuk kolektor."\n', '').replace('"By collectors, for collectors."\n', '')}
@@ -75,23 +81,16 @@ export default function Home() {
             title={t('card_wiki')}
             desc={t('card_desc')}
             href="/cards" 
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-pastel-pink drop-shadow-sm">
-                <rect x="4" y="3" width="16" height="18" rx="2" ry="2" />
-                <path d="M9 8h.01 M15 16h.01 M8 12h8 M10 14l2-2 2 2" className="text-black-coral" />
-              </svg>
-            }
+            icon={<CardWikiIcon size={48} className="text-black-coral" />}
           />
         </motion.div>
         
         <motion.div variants={{ hidden: { opacity: 0, scale: 0.9, rotate: 2 }, visible: { opacity: 1, scale: 1, rotate: 1 } }} className="flex-1 hand-drawn">
           <FeatureCard 
             title={t('packs_wiki')}
-            desc="Cari tahu isi semua ekspansi kartu Pokémon dari yang paling lawas sampai terbaru."
+            desc={t('packs_desc')}
             href="/sets" 
-            icon={
-              <span className="text-5xl drop-shadow-sm rotate-12 inline-block">📦</span>
-            }
+            icon={<PacksIcon size={48} className="text-black-coral" />}
           />
         </motion.div>
 
@@ -100,12 +99,7 @@ export default function Home() {
             title={t('price_check')}
             desc={t('price_desc')}
             href="/pricing" 
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-wintergreen drop-shadow-sm">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v10 M10 9.5c0-.8.6-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5" className="text-black-coral" />
-              </svg>
-            }
+            icon={<PriceTagIcon size={48} className="text-black-coral" />}
           />
         </motion.div>
       </motion.div>

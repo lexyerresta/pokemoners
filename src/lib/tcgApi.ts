@@ -12,14 +12,14 @@ export async function getTcgCardDetail(id: string) {
   return res.json();
 }
 
-export async function searchTcgCards(query: string) {
-  const res = await fetch(`${getBaseUrl()}/api/cards?type=search&q=${encodeURIComponent(query)}`);
+export async function searchTcgCards(query: string, page = 1, limit = 20) {
+  const res = await fetch(`${getBaseUrl()}/api/cards?type=search&q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`);
   if (!res.ok) throw new Error('Failed to fetch tcg cards');
   return res.json();
 }
 
-export async function getCardPrices(name: string) {
-  const res = await fetch(`${getBaseUrl()}/api/prices?q=${encodeURIComponent(name)}`);
+export async function getCardPrices(name: string, page = 1) {
+  const res = await fetch(`${getBaseUrl()}/api/prices?q=${encodeURIComponent(name)}&page=${page}`);
   if (!res.ok) throw new Error('Failed to fetch prices');
   return res.json();
 }

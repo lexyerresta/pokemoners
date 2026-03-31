@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePathname } from 'next/navigation';
 import { SUPPORT_LINKS } from '@/lib/constants';
+import { SaweriaIcon, TrakteerIcon, HeartIcon } from '@/components/ui/CustomIcons';
 
 export default function Navbar() {
   const { lang, setLang, t } = useLanguage();
@@ -58,18 +59,18 @@ export default function Navbar() {
 
           <div className="relative group hidden md:block">
             <button className="flex items-center gap-2 bg-white px-3 py-1.5 border-[3px] border-black-coral shadow-[4px_4px_0_var(--color-black-coral)] hover:shadow-[2px_2px_0_var(--color-black-coral)] hover:translate-y-px transition-all hand-drawn-btn transform rotate-[-3deg] hover:rotate-1 z-20 relative">
-              <span className="font-handdrawn font-black uppercase text-sm text-super-dark pt-1">Support Us</span>
-              <span className="text-pastel-pink text-sm animate-pulse">❤️</span>
+              <span className="font-handdrawn font-black uppercase text-sm text-super-dark pt-1">{t('support_us')}</span>
+              <HeartIcon className="text-pastel-pink animate-pulse" size={20} />
             </button>
 
             {/* Dropdown Menu */}
             <div className="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 w-48 origin-top-right">
               <div className="bg-creamy-linen border-[3px] border-black-coral shadow-[6px_6px_0_var(--color-black-coral)] p-3 flex flex-col gap-3 hand-drawn-alt rotate-2">
-                <a href={SUPPORT_LINKS.SAWERIA} target="_blank" rel="noopener noreferrer" className="bg-pastel-pink text-white font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] hover:bg-terracotta transition-colors hand-drawn-btn hover:-translate-y-px hover:-rotate-2 rotate-1 text-center">
-                  ✨ Saweria
+                <a href={SUPPORT_LINKS.SAWERIA} target="_blank" rel="noopener noreferrer" className="bg-pastel-pink text-white font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] hover:bg-terracotta transition-colors hand-drawn-btn hover:-translate-y-px hover:-rotate-2 rotate-1 text-center flex items-center justify-center gap-2">
+                   <SaweriaIcon size={18} className="text-white" /> Saweria
                 </a>
-                <a href={SUPPORT_LINKS.TRAKTEER} target="_blank" rel="noopener noreferrer" className="bg-wintergreen text-super-dark font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] hover:bg-mustard transition-colors hand-drawn-btn hover:-translate-y-px hover:rotate-2 -rotate-1 text-center">
-                  ☕ Trakteer
+                <a href={SUPPORT_LINKS.TRAKTEER} target="_blank" rel="noopener noreferrer" className="bg-[#BE1E2D] text-white font-black px-4 py-2 border-2 border-black-coral shadow-[2px_2px_0_var(--color-black-coral)] hover:bg-[#8B151F] transition-colors hand-drawn-btn hover:-translate-y-px hover:rotate-2 -rotate-1 text-center flex items-center justify-center gap-2">
+                   <TrakteerIcon size={18} className="text-white" /> Trakteer
                 </a>
               </div>
             </div>
